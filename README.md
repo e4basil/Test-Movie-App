@@ -6,5 +6,4 @@ Features
 - Hilt for dependency injection
 - Gson for json parsing
 
-For testing 
-https://appdistribution.firebase.google.com/pub/i/990fdfa5317e791b
+For testing:- https://appdistribution.firebase.google.com/pub/i/990fdfa5317e791b
