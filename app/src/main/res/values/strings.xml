@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Diagonal Movie App</string>
+    <string name="file_error">Error occurred while reading from file</string>>
+    <string name="generic_error">Something went wrong</string>
+    <string name="romantic_comedy">Romantic Comedy</string>
+    <string name="search_hint">Search a movie</string>
+    <string name="no_results_found">No results found</string>
+    <string name="home_fragment">Romantic</string>
+    <string name="fragment_search">Search</string>
+    <string name="message_no_results">No results found</string>
 </resources>
