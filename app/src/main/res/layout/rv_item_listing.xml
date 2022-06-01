@@ -8,7 +8,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/banner"
+            android:id="@+id/iv_movie"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="fitXY"
@@ -17,14 +17,19 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_movie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/titillium_web"
             android:text="TextView"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingEnd="8dp"
             android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="@+id/banner"
-            app:layout_constraintTop_toBottomOf="@+id/banner" />
+            app:layout_constraintStart_toStartOf="@+id/iv_movie"
+            app:layout_constraintTop_toBottomOf="@+id/iv_movie" />
+        
+        
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

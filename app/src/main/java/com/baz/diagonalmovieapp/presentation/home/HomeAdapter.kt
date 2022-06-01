@@ -17,7 +17,6 @@ class HomeAdapter() : ListAdapter<ContentItem, HomeAdapter.ItemViewHolder>(DiffC
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
             RvItemListingBinding.inflate(LayoutInflater.from(parent.context))
-//            inflate(LayoutInflater.from(parent.context))
         )
     }
 
@@ -43,14 +42,14 @@ class HomeAdapter() : ListAdapter<ContentItem, HomeAdapter.ItemViewHolder>(DiffC
     ) {
 
         fun onBind(item: ContentItem) {
-            mBinding.textView.text = item.name
+            mBinding.tvMovie.text = item.name
 
             Glide
                 .with(mBinding.root.context)
                 .load(Utils.getMoviesPoster(item.posterImage))
                 .centerCrop()
                 .placeholder(R.drawable.placeholder_for_missing_posters)
-                .into(mBinding.banner)
+                .into(mBinding.ivMovie)
         }
 
     }

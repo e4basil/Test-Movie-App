@@ -56,26 +56,26 @@ class SearchFragment : Fragment() {
                     when (it) {
 
                         is SearchState.onEmpty -> {
-//                            mBinding.tvNoResult?.visibility = View.VISIBLE
-                            mBinding.searchRecyclerView.visibility = View.GONE
+                            mBinding.tvNoResult.visibility = View.GONE
+                            mBinding.rvSearch.visibility = View.GONE
                         }
                         is SearchState.onNoResult -> {
-                            mBinding.tvNoResult?.visibility = View.VISIBLE
-                            mBinding.searchRecyclerView.visibility = View.GONE
+                            mBinding.tvNoResult.visibility = View.VISIBLE
+                            mBinding.rvSearch.visibility = View.GONE
 
                         }
                         is SearchState.onLoading -> {
 
                         }
                         is SearchState.onSuccess -> {
-                            mBinding.tvNoResult?.visibility = View.GONE
-                            mBinding.searchRecyclerView.visibility = View.VISIBLE
-                            (mBinding.searchRecyclerView.adapter as HomeAdapter).submitList(it?.data)
+                            mBinding.tvNoResult.visibility = View.GONE
+                            mBinding.rvSearch.visibility = View.VISIBLE
+                            (mBinding.rvSearch.adapter as HomeAdapter).submitList(it?.data)
                             adapter.notifyDataSetChanged()
                         }
                         is SearchState.onFailure -> {
-                            mBinding.tvNoResult?.visibility = View.VISIBLE
-                            mBinding.searchRecyclerView.visibility = View.GONE
+                            mBinding.tvNoResult.visibility = View.VISIBLE
+                            mBinding.rvSearch.visibility = View.GONE
                         }
                     }
                 }
@@ -84,15 +84,18 @@ class SearchFragment : Fragment() {
 
     private fun setupListeners() {
 
-        mBinding.cancelSearchImageView.setOnClickListener {
-            mBinding.editTextSearch.setText("")
+        mBinding.ivCancel.setOnClickListener {
+            mBinding.etSearch.setText("")
+            mBinding.tvNoResult.visibility = View.GONE
         }
-        mBinding.editTextSearch.requestFocus();
-        mBinding.editTextSearch.doAfterTextChanged {
+        mBinding.etSearch.requestFocus();
+        mBinding.etSearch.doAfterTextChanged {
             if (it.toString() != "") {
-                mBinding.cancelSearchImageView.visibility = View.VISIBLE
+                mBinding.ivCancel.visibility = View.VISIBLE
+                mBinding.tvNoResult.visibility = View.VISIBLE
             } else {
-                mBinding.cancelSearchImageView.visibility = View.GONE
+                mBinding.ivCancel.visibility = View.GONE
+                mBinding.tvNoResult.visibility = View.GONE
             }
             viewModel.doSearching(it.toString())
         }
@@ -100,7 +103,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupRecyclerview() {
-        mBinding.searchRecyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
+        mBinding.rvSearch.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(
                 outRect: Rect,
                 view: View,
@@ -116,7 +119,7 @@ class SearchFragment : Fragment() {
         })
 
         adapter = HomeAdapter()
-        mBinding.searchRecyclerView.adapter = adapter
+        mBinding.rvSearch.adapter = adapter
 
     }
 }

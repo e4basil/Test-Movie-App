@@ -5,7 +5,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
+    android:background="@android:color/black"
     android:elevation="10dp"
     android:minHeight="?attr/actionBarSize"
     android:theme="@style/ToolbarTheme"
@@ -24,8 +24,8 @@
 
         <ImageView
             android:id="@+id/imageBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,15 +45,13 @@
 
         <ImageView
             android:id="@+id/imageSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginEnd="@dimen/margin_start_toolbar"
             android:src="@drawable/search"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.appcompat.widget.Toolbar>

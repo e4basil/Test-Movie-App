@@ -87,7 +87,6 @@ class HomeListingFragment : Fragment() {
                                 mAdapter.notifyDataSetChanged()
                             }
                             is HomeState.onFailure -> {
-                                Log.d("TAG", "error....: $it")
                             }
                         }
                     }
@@ -120,10 +119,10 @@ class HomeListingFragment : Fragment() {
 
 
     private fun setupClickEvents() {
-        mBinding.imageBack.setOnClickListener {
+        mBinding.ivBack.setOnClickListener {
             requireActivity().onBackPressed()
         }
-        mBinding.imageSearch.setOnClickListener {
+        mBinding.ivSearch.setOnClickListener {
             findNavController().navigate(R.id.searchFragment)
         }
     }
