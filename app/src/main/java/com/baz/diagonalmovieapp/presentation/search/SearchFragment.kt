@@ -11,10 +11,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.baz.diagonalmovieapp.R
 import com.baz.diagonalmovieapp.databinding.FragmentSearchListingBinding
+import com.baz.diagonalmovieapp.domain.model.ContentItem
 import com.baz.diagonalmovieapp.presentation.activity.MainActivityViewModel
 import com.baz.diagonalmovieapp.presentation.home.HomeAdapter
+import com.baz.diagonalmovieapp.presentation.home.HomeListingFragment
 import com.baz.diagonalmovieapp.util.SearchState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -118,7 +122,11 @@ class SearchFragment : Fragment() {
             }
         })
 
-        adapter = HomeAdapter()
+        adapter = HomeAdapter(listener = object : HomeListingFragment.OnItemClickListener {
+            override fun onItemClick(item: ContentItem) {
+//                findNavController().navigate(R.id.searchFragment)
+            }
+        })
         mBinding.rvSearch.adapter = adapter
 
     }

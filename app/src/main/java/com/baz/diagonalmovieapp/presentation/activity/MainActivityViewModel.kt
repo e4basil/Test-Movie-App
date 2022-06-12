@@ -3,6 +3,7 @@ package com.baz.diagonalmovieapp.presentation.activity
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.baz.diagonalmovieapp.domain.model.ContentItem
 import com.baz.diagonalmovieapp.domain.model.Response
 import com.baz.diagonalmovieapp.domain.repository.MoviesRepository
 import com.baz.diagonalmovieapp.util.HomeState
@@ -40,6 +41,7 @@ class MainActivityViewModel @Inject constructor(
 
     private var page = 1
     private var listingPaginationData: Response? = null
+    private var listData:List<ContentItem>?=null
 
     init {
         getList()
@@ -52,33 +54,43 @@ class MainActivityViewModel @Inject constructor(
 
         viewModelScope.launch(dispatcher) {
 
-            when (val response = repository.getMovieListing(page)) {
+//            when (val response = repository.getMovieListing(page)) {
+//                is Resource.Success -> {
+//
+//                    if (listingPaginationData == null) {
+//                        listingPaginationData = response.data
+//                    } else {
+//                        val oldArticles = listingPaginationData?.page?.contentItems?.content
+//                        val newArticles = response.data?.page?.contentItems?.content
+//
+//                        Log.d(
+//                            "TAG",
+//                            "oldArticles: " + oldArticles?.size + "..newArticles.. " + newArticles?.size
+//                        )
+//                        oldArticles?.addAll(newArticles!!)
+//                    }
+//
+//                    mutableListingData.value =
+//                        HomeState.onSuccess(listingPaginationData!!)
+//
+////                    if (page==3)
+////                        return@launch
+//                    page++
+//
+//                }
+//
+//                else -> Unit
+//
+//            }
+            when(val response = repository.getDummyData()){
                 is Resource.Success -> {
-
-                    if (listingPaginationData == null) {
-                        listingPaginationData = response.data
-                    } else {
-                        val oldArticles = listingPaginationData?.page?.contentItems?.content
-                        val newArticles = response.data?.page?.contentItems?.content
-
-                        Log.d(
-                            "TAG",
-                            "oldArticles: " + oldArticles?.size + "..newArticles.. " + newArticles?.size
-                        )
-                        oldArticles?.addAll(newArticles!!)
-                    }
-
+                    listData=response.data
                     mutableListingData.value =
-                        HomeState.onSuccess(listingPaginationData!!)
-
-//                    if (page==3)
-//                        return@launch
-                    page++
+                        HomeState.onSucces(listData!!)
 
                 }
 
-                else -> Unit
-
+                else -> {}
             }
 
         }
@@ -93,7 +105,7 @@ class MainActivityViewModel @Inject constructor(
     }
 
     fun doSearching(queryData: String) {
-        if (queryData.isEmpty() || queryData.length <= 2) {
+        if (queryData.isEmpty() || queryData.length <= 0) {
             mutableSearchList.value = SearchState.onNoResult
             return
         }
@@ -103,15 +115,25 @@ class MainActivityViewModel @Inject constructor(
         searchJob = viewModelScope.launch {
             delay(500L)
 
-            val searchList = listingPaginationData?.page?.contentItems?.content?.filter {
+            val filterList=listData?.filter {
                 it.name.lowercase() == queryData.lowercase() || it.name.lowercase()
                     .contains(queryData.lowercase())
             }
-            if (searchList?.isEmpty() == true) {
+
+            if (filterList?.isEmpty() == true) {
                 mutableSearchList.value = SearchState.onNoResult
             } else {
-                mutableSearchList.value = SearchState.onSuccess(searchList)
+                mutableSearchList.value = SearchState.onSuccess(filterList)
             }
+//            val searchList = listingPaginationData?.page?.contentItems?.content?.filter {
+//                it.name.lowercase() == queryData.lowercase() || it.name.lowercase()
+//                    .contains(queryData.lowercase())
+//            }
+//            if (searchList?.isEmpty() == true) {
+//                mutableSearchList.value = SearchState.onNoResult
+//            } else {
+//                mutableSearchList.value = SearchState.onSuccess(searchList)
+//            }
         }
 
     }

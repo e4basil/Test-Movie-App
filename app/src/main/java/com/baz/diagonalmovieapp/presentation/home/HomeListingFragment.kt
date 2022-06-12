@@ -10,7 +10,6 @@ import android.widget.AbsListView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
@@ -18,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.baz.diagonalmovieapp.R
 import com.baz.diagonalmovieapp.databinding.FragmentHomeListingBinding
+import com.baz.diagonalmovieapp.domain.model.ContentItem
 import com.baz.diagonalmovieapp.domain.model.Response
 import com.baz.diagonalmovieapp.presentation.activity.MainActivityViewModel
 import com.baz.diagonalmovieapp.util.HomeState
@@ -88,6 +88,11 @@ class HomeListingFragment : Fragment() {
                             }
                             is HomeState.onFailure -> {
                             }
+
+                            is HomeState.onSucces ->{
+                                (mBinding.recyclerView.adapter as HomeAdapter).submitList(it.data.toMutableList())
+                                mAdapter.notifyDataSetChanged()
+                            }
                         }
                     }
 
@@ -111,9 +116,14 @@ class HomeListingFragment : Fragment() {
             }
         })
 
-        mBinding.recyclerView.addOnScrollListener(scrollListener)
+//        mBinding.recyclerView.addOnScrollListener(scrollListener)
 
-        mAdapter = HomeAdapter()
+        mAdapter = HomeAdapter(listener = object : OnItemClickListener {
+            override fun onItemClick(item: ContentItem) {
+                findNavController().navigate(R.id.searchFragment)
+            }
+        })
+
         mBinding.recyclerView.adapter = mAdapter
     }
 
@@ -159,5 +169,9 @@ class HomeListingFragment : Fragment() {
                 isScrolling = true
             }
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(item: ContentItem)
     }
 }
